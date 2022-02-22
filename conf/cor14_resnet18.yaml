@@ -74,7 +74,7 @@ logging:
 model:
   _target_: src.pl_modules.model.MyModel
   name: resnet18
-  num_classes: 10
+  num_classes: 1
   final_nl: log_softmax
   loss: nll_loss
 

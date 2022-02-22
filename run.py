@@ -15,7 +15,8 @@ from pytorch_lightning.callbacks import (
     EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
-    ProgressBar
+    ProgressBar,
+    TQDMProgressBar
 )
 from pytorch_lightning.loggers import WandbLogger
 
@@ -64,7 +65,7 @@ def build_callbacks(cfg: DictConfig) -> List[Callback]:
         )
 
     callbacks.append(
-        ProgressBar(
+        TQDMProgressBar(
             refresh_rate=cfg.logging.progress_bar_refresh_rate
             )
         )
