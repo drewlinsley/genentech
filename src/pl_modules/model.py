@@ -30,6 +30,7 @@ class MyModel(pl.LightningModule):
         self.cfg = cfg
         self.save_hyperparameters(cfg)
         self.name = name
+        self.self_supervised = self_supervised
         # self.automatic_optimization = False
         self.num_classes = num_classes
         self.loss = getattr(losses, loss)  # Add this to the config
@@ -214,6 +215,7 @@ class MyModel(pl.LightningModule):
         if not self.cfg.optim.use_lr_scheduler:
             return opt
 
+        # Handle schedulers if requested
         if torch.optim.lr_scheduler.warmup_steps:
             # Right now this is specific to SimCLR
             lr_scheduler = {
