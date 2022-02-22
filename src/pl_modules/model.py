@@ -131,12 +131,7 @@ class MyModel(pl.LightningModule):
         for output_element in iterate_elements_in_batches(
             outputs, batch_size, self.cfg.logging.n_elements_to_log
         ):  
-            import pdb;pdb.set_trace()
             rendered_image = render_images(output_element["image"], autoshow=False)
-            if rendered_image.shape[-1] > 1:
-                # rendered_image[..., -1] -= 0.5
-                # rendered_image = rendered_image.sum(-1)[..., None]
-                rendered_image = np.concatenate((rendered_image, np.zeros_like(rendered_image)[..., 0][..., None]), -1)
             caption = f"y_pred: {output_element['logits'].argmax()}  [gt: {output_element['y_true']}]"
             images.append(
                 wandb.Image(
