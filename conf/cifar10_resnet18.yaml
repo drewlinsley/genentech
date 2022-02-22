@@ -14,7 +14,7 @@ data:
     dataset_name: CIFAR10  # Label for experiment
     transform_recipe: ${data.datamodule.dataset_name}
     datasets:
-      "${data.datamodule.dataset_name}":
+      CIFAR10:
         train:
           _target_: src.pl_data.dataset.CIFAR10
           train: True

@@ -14,17 +14,17 @@ data:
     dataset_name: COR14  # Label for experiment
     transform_recipe: SIMCLR_COR14
     datasets:
-      ${data.datamodule.dataset_name}:
+      COR14:
         train:
-          _target_: src.pl_data.dataset.CIFAR10
+          _target_: src.pl_data.dataset.COR14
           train: True
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
         val:
-          _target_: src.pl_data.dataset.CIFAR10
+          _target_: src.pl_data.dataset.COR14
           train: False
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
         test:
-          _target_: src.pl_data.dataset.CIFAR10
+          _target_: src.pl_data.dataset.COR14
           train: False
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
     num_workers:
