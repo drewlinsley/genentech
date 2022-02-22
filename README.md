@@ -1,5 +1,6 @@
 # Models to decode cell phenotypes during live imaging experiments
-Built using Python 3.7.12
+Built using Python 3.7.12, Pytorch, and Pytorchlightning.
+Visualization with [Weights&Biases](https://wandb.ai/) 
 
 ---
 
