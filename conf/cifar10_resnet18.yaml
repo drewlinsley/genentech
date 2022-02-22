@@ -1,4 +1,4 @@
-# metadata specialised for each experiment
+# @package _global_
 core:
   version: 0.0.1
   tags:
