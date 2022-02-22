@@ -45,15 +45,15 @@ TRANSFORM_RECIPES = {
                 transforms.RandomCrop(224),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomVerticalFlip(),
-                cor14_normalization(),
+                normalizations.COR14_normalization(),
             ]),
         "val": transforms.Compose([
                 transforms.ToTensor(),
-                cor14_normalization(),
+                normalizations.COR14_normalization(),
             ]),
         "test": transforms.Compose([
                 transforms.ToTensor(),
-                cor14_normalization(),
+                normalizations.COR14_normalization(),
             ]),
     },
     "SIMCLR_COR14": {
@@ -61,17 +61,17 @@ TRANSFORM_RECIPES = {
             input_height=224,
             gaussian_blur=True,
             jitter_strength=1.,
-            normalize=cor14_normalization),  # noqa
+            normalize=normalizations.COR14_normalization),  # noqa
         "val": SimCLREvalDataTransform(
             input_height=224,
             gaussian_blur=False,
             jitter_strength=0.,
-            normalize=cor14_normalization),  # noqa
+            normalize=normalizations.COR14_normalization),  # noqa
         "test": SimCLREvalDataTransform(
             input_height=224,
             gaussian_blur=False,
             jitter_strength=0.,
-            normalize=cor14_normalization),  # noqa
+            normalize=normalizations.COR14_normalization),  # noqa
     },
 }
 
