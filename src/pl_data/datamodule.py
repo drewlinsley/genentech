@@ -107,6 +107,7 @@ class MyDataModule(pl.LightningDataModule):
 
     def setup(self, stage: Optional[str] = None):
         # transforms
+        import pdb;pdb.set_trace()
         train_transform = transforms.Compose(
             [
                 transforms.ToTensor(),
