@@ -131,7 +131,6 @@ class MyModel(pl.LightningModule):
         for output_element in iterate_elements_in_batches(
             outputs, batch_size, self.cfg.logging.n_elements_to_log
         ):  
-            import pdb;pdb.set_trace()
             rendered_image = render_images(output_element["image"], autoshow=False)
             if rendered_image.shape[-1] > 1:
                 # rendered_image[..., -1] -= 0.5
