@@ -106,8 +106,7 @@ class MyDataModule(pl.LightningDataModule):
 
 
     def setup(self, stage: Optional[str] = None):
-        # transforms
-        import pdb;pdb.set_trace()
+        """Prepare datasets for train/val/test."""
         selected_recipe = TRANSFORM_RECIPES.get(self.transform_recipe, None)
         assert transforms is not None, "Could not recognize your transform recipe: {}".format(self.transform_recipe)  # noqa
         train_transform = selected_recipe["train"]
