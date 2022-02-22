@@ -15,6 +15,7 @@ from pytorch_lightning.callbacks import (
     EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
+    ProgressBar
 )
 from pytorch_lightning.loggers import WandbLogger
 
@@ -62,6 +63,11 @@ def build_callbacks(cfg: DictConfig) -> List[Callback]:
             )
         )
 
+    callbacks.append(
+        ProgressBar(
+            refresh_rate=cfg.logging.progress_bar_refresh_rate
+            )
+        )
     return callbacks
 
 
@@ -129,7 +135,6 @@ def run(cfg: DictConfig) -> None:
         deterministic=cfg.train.deterministic,
         val_check_interval=cfg.logging.val_check_interval,
         log_every_n_steps=10,
-        progress_bar_refresh_rate=cfg.logging.progress_bar_refresh_rate,
         #auto_select_gpus=True,
         # benchmark=True,
         accelerator=None,  # 'dp', "ddp" if args.gpus > 1 else None,
@@ -141,7 +146,7 @@ def run(cfg: DictConfig) -> None:
     num_classes = cfg.model.num_classes
     batch_size = datamodule.batch_size["train"]
 
-    hydra.utils.log.info("Starting training with {} classes and batches of {} images".format(
+    hydra.utils.log.info("Starting training with {} classes and batches of {} images∂q".format(
         num_classes,
         batch_size))
 
@@ -157,7 +162,7 @@ def run(cfg: DictConfig) -> None:
         wandb_logger.experiment.finish()
 
 
-@hydra.main(config_path="conf", config_name="default")
+@hydra.main(config_path="conf", config_name="NeedAConfig")
 def main(cfg: omegaconf.DictConfig):
     run(cfg)
 
