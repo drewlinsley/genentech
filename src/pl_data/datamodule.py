@@ -125,7 +125,6 @@ class MyDataModule(pl.LightningDataModule):
 
 
         # split dataset
-        import pdb;pdb.set_trace()
         if stage is None or stage == "fit":
             assert self.val_proportion >= 0 and self.val_proportion < 1., \
                 "val_proportion must be 1 > x >= 0"
