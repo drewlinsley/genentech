@@ -198,7 +198,7 @@ class MyDataModule(pl.LightningDataModule):
             f"{self.datasets}, "
             f"{self.num_workers}, "
             f"{self.batch_size})"
-            f"{self.val_percentage}"
+            f"{self.val_proportion}"
         )
 
 
