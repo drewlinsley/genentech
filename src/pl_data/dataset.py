@@ -101,8 +101,9 @@ class COR14(Dataset):
     def __getitem__(self, index: int):
         img = self.files[index]
         img = io.imread(img, plugin='pil')
-        img = img.transpose(2, 0, 1).astype(np.float32)
+        img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
+        img = img[None].repeat(3, 1, 1)  # Stupid but let's replicate 1->3 channel
         label = 0  # Set a fixed label for now. Dummy.
         return img, label
 
