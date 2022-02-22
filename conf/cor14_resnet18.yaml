@@ -10,7 +10,7 @@ core:
 data:
   datamodule:
     _target_: src.pl_data.datamodule.MyDataModule
-    val_proportion: 0.01
+    val_proportion: 0.15
     dataset_name: COR14  # Label for experiment
     transform_recipe: ${data.datamodule.dataset_name}
     datasets:
@@ -26,7 +26,7 @@ data:
         test:
           _target_: src.pl_data.dataset.COR14
           train: False
-          path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
+          path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR18/T2/72CAG2
     num_workers:
       train: 4
       val: 4
