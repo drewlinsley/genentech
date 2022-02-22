@@ -54,14 +54,15 @@ hydra:
 
 logging:
   n_elements_to_log: 32
+  normalize_visualization: True
 
   # log frequency
   val_check_interval: 1.0
   progress_bar_refresh_rate: 20
 
   wandb:
-    project: cont-learn
-    entity: serrelab
+    project: genentech
+    entity: drewlinsley
 
     watch:
       log: 'all'

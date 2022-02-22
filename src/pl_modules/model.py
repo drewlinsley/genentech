@@ -131,7 +131,7 @@ class MyModel(pl.LightningModule):
         for output_element in iterate_elements_in_batches(
             outputs, batch_size, self.cfg.logging.n_elements_to_log
         ):  
-            rendered_image = render_images(output_element["image"], autoshow=False)
+            rendered_image = render_images(output_element["image"], autoshow=False, normalize=cfg.logging.normalize_visualization)
             caption = f"y_pred: {output_element['logits'].argmax()}  [gt: {output_element['y_true']}]"
             images.append(
                 wandb.Image(
