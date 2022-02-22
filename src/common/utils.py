@@ -38,7 +38,7 @@ def load_envs(env_file: Optional[str] = None) -> None:
 
 
 def render_images(
-    batch: torch.Tensor, nrow=8, title: str = "Images", autoshow: bool = True, normalize: bool = False
+    batch: torch.Tensor, nrow=8, title: str = "Images", autoshow: bool = True, normalize: bool = True
 ) -> np.ndarray:
     """
     Utility function to render and plot a batch of images in a grid
@@ -51,7 +51,7 @@ def render_images(
     """
     image = (
         torchvision.utils.make_grid(
-            batch.detach().cpu(), nrow=nrow, padding=2, normalize=normalize
+            batch.detach().cpu(), nrow=nrow, padding=2, normalize=normalize, scale_each=True
         )
         .permute((1, 2, 0))
         .numpy()

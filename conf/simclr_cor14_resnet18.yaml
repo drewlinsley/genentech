@@ -28,7 +28,7 @@ data:
           train: False
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
     num_workers:
-      train: 1
+      train: 4
       val: 1
       test: 1
 
