@@ -14,7 +14,7 @@ data:
     dataset_name: COR14  # Label for experiment
     transform_recipe: ${data.datamodule.dataset_name}
     datasets:
-      "${data.dataset_name}":
+      "${data.datamodule.dataset_name}":
         train:
           _target_: src.pl_data.dataset.CIFAR10
           train: True
