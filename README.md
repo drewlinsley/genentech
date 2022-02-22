@@ -8,10 +8,11 @@ Built using Python 3.7.12
 *Train models to learn a mapping from cell image to a label (e.g., TDP-43 or control).*
 
 CIFAR10 example: `python run.py --config-name=cifar10_resnet18.yaml`
-
+[W&B Progress](https://wandb.ai/drewlinsley/genentech/runs/3w4tgc75?workspace=user-drewlinsley)
+[IPython notebook](https://colab.research.google.com/drive/1z_oPHNqNw_e7DCIL6SfvADRCgUA8RrMR)
 
 COR14 example: `python run.py --config-name=cor14_resnet18.yaml`
-
+[W&B Progress](https://wandb.ai/drewlinsley/genentech/runs/1cganw4q)
 [IPython notebook](https://colab.research.google.com/drive/1z_oPHNqNw_e7DCIL6SfvADRCgUA8RrMR)
 
 ---
