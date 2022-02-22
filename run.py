@@ -137,11 +137,11 @@ def run(cfg: DictConfig) -> None:
         **cfg.train.pl_trainer,
     )
 
-    num_samples = len(datamodule.train_dataset)
+    # num_samples = len(datamodule.train_dataset)
     num_classes = cfg.model.num_classes
-    batch_size = cfg.data.datamodule.batch_size
-    hydra.utils.log.info("Starting training with {} samples, {} classes, and {} batch size".format(
-        num_samples,
+    batch_size = datamodule.batch_size["train"]
+
+    hydra.utils.log.info("Starting training with {} classes, and {} batch size".format(
         num_classes,
         batch_size))
 
