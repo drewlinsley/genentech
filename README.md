@@ -22,7 +22,10 @@ COR14 example: `python run.py --config-name=cor14_resnet18.yaml`
 
 *Train models with SimCLR to learn good visual features on live-cell imaging datasets.*
 
+COR14 example: `cd genentech && python run.py --config-name=simclr_cor14_resnet18.yaml`
+[IPython notebook](https://colab.research.google.com/drive/14H3H5fY9QZfyVBjA9lFBkLzc4rs2sCNE#scrollTo=qSc6r68ood0F)
 
-## Self-supervised testing
+
+## Self-supervised evaluation
 
 *Transfer trained self-sup models to a new task, such as classifying disease in a cell.*
