@@ -131,6 +131,7 @@ class MyModel(pl.LightningModule):
         for output_element in iterate_elements_in_batches(
             outputs, batch_size, self.cfg.logging.n_elements_to_log
         ):  
+            import pdb;pdb.set_trace()
             rendered_image = render_images(output_element["image"], autoshow=False)
             if rendered_image.shape[-1] > 1:
                 # rendered_image[..., -1] -= 0.5
@@ -153,7 +154,7 @@ class MyModel(pl.LightningModule):
 
         # integrated_gradients = IntegratedGradients(self.forward)
         # noise_tunnel = NoiseTunnel(integrated_gradients)
-        
+        import pdb;pdb.set_trace()
         self.logger.experiment.log({"Test Images": images}, step=self.global_step)
         return  # Don't need this stuff below vvvv
 
