@@ -13,7 +13,7 @@ from src.pl_data import dataset
 from torch import default_generator, Generator
 from torch.utils.data import DataLoader, Dataset, random_split, Subset
 from itertools import accumulate as _accumulate
-from pl_bolts.models.self_supervised.simclr.simclr_transforms import (
+from pl_bolts.models.self_supervised.simclr.transforms import (
     SimCLREvalDataTransform, SimCLRTrainDataTransform)
 
 
