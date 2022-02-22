@@ -99,7 +99,7 @@ class COR14(Dataset):
         return self.data_len
 
     def __getitem__(self, index: int):
-        img = self.dataset[index]
+        img = self.files[index]
         img = io.imread(img, plugin='pil')
         img = img.transpose(2, 0, 1).astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
