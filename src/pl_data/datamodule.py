@@ -118,6 +118,7 @@ class MyDataModule(pl.LightningDataModule):
             assert self.val_proportion >= 0 and self.val_proportion < 1., \
                 "val_proportion must be 1 > x >= 0"
             print(self.datasets)
+            import pdb;pdb.set_trace()
             plank_train = hydra.utils.instantiate(
                 self.datasets[self.dataset_name].train,
                 cfg=self.cfg,
