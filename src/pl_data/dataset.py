@@ -104,7 +104,7 @@ class COR14(Dataset):
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         print(img.shape)
-        img = img[None].repeat(3, 1, 1)  # Stupid but let's replicate 1->3 channel
+        img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
         label = 0  # Set a fixed label for now. Dummy.
         return img, label
 
