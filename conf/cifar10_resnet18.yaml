@@ -12,9 +12,9 @@ data:
     _target_: src.pl_data.datamodule.MyDataModule
     val_proportion: 0.15
     dataset_name: CIFAR10  # Label for experiment
-    transform_recipe: ${dataset_name}
+    transform_recipe: ${data.datamodule.dataset_name}
     datasets:
-      CIFAR10:
+      ${data.datamodule.dataset_name}:
         train:
           _target_: src.pl_data.dataset.CIFAR10
           train: True
