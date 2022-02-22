@@ -5,8 +5,7 @@ core:
     - consulting
 
 defaults:
-  - _self_
-  - settings
+  - logging: settings
 #  - override hydra/launcher: joblib
 
 data:
