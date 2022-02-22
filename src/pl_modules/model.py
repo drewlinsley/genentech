@@ -201,8 +201,8 @@ class MyModel(pl.LightningModule):
             - Tuple of dictionaries as described, with an optional 'frequency' key.
             - None - Fit will run without any optimizer.
         """
-        if exclude_bn_bias:
-            params = self.exclude_from_wt_decay(self.named_parameters(), weight_decay=self.cfg.optim.weight_decay)
+        if self.cfg.optim.optimizer.exclude_bn_bias:
+            params = self.exclude_from_wt_decay(self.named_parameters(), weight_decay=self.cfg.optim.optimizer.weight_decay)
         else:
             params = self.parameters()
 
@@ -218,14 +218,17 @@ class MyModel(pl.LightningModule):
             lr_scheduler = {
                 "scheduler": torch.optim.lr_scheduler.LambdaLR(
                     opt,
-                    linear_warmup_decay(warmup_steps, total_steps, cosine=True),
+                    linear_warmup_decay(
+                        self.cfg.optim.lr_scheduler.warmup_steps,
+                        self.cfg.optim.lr_scheduler.total_steps,
+                        cosine=True),
                 ),
                 "interval": "step",
                 "frequency": 1,
             }
         else:
             lr_scheduler = self.cfg.optim.lr_scheduler
-        scheduler = hydra.utils.instantiate(self.cfg.optim.lr_scheduler, optimizer=opt)
+        scheduler = hydra.utils.instantiate(lr_scheduler, optimizer=opt)
         return [opt], [scheduler]
 
     def exclude_from_wt_decay(self, named_params, weight_decay, skip_list=("bias", "bn")):

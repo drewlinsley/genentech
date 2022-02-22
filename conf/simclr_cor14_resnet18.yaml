@@ -92,7 +92,7 @@ optim:
   use_lr_scheduler: True
   lr_scheduler:
     _target_: torch.optim.lr_scheduler.LambdaLR
-    warmup_steps: (70000 // 256) * 10
+    warmup_steps: 2734  #  (70000 // 256) * 10
     total_steps: 7000000  # 70000 * 100
 
 train:
