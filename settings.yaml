@@ -1,0 +1,4 @@
+logging:
+  wandb:
+    project: genentech
+    entity: drewlinsley
