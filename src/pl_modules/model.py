@@ -208,7 +208,7 @@ class MyModel(pl.LightningModule):
             params = self.parameters()
 
         opt = hydra.utils.instantiate(
-            self.cfg.optim.optimizer, params=params, weight_decay=weight_decay
+            self.cfg.optim.optimizer, params=params, weight_decay=self.cfg.optim.optimizer.weight_decay
         )
         
         if not self.cfg.optim.use_lr_scheduler:
