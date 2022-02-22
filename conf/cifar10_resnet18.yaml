@@ -4,9 +4,8 @@ core:
   tags:
     - consulting
 
-defaults:
-  - logging: settings
-#  - override hydra/launcher: joblib
+# defaults:
+#   - logging: settings
 
 data:
   datamodule:
@@ -61,9 +60,9 @@ logging:
   val_check_interval: 1.0
   progress_bar_refresh_rate: 20
 
-  # wandb:
-  #   project: genentech
-  #   entity: drewlinsley
+  wandb:
+    project: genentech
+    entity: drewlinsley
 
     watch:
       log: 'all'
