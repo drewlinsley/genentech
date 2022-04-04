@@ -89,12 +89,13 @@ optim:
     eps: 1e-08
     weight_decay: 0.
 
-  exclude_bn_bias: True
-  use_lr_scheduler: True
   lr_scheduler:
     _target_: torch.optim.lr_scheduler.LambdaLR
     warmup_steps: 2734  #  (70000 // 256) * 10
     total_steps: 7000000  # 70000 * 100
+
+  exclude_bn_bias: True
+  use_lr_scheduler: True
 
 train:
   # reproducibility
