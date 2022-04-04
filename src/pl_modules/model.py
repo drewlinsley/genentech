@@ -201,8 +201,8 @@ class MyModel(pl.LightningModule):
             - Tuple of dictionaries as described, with an optional 'frequency' key.
             - None - Fit will run without any optimizer.
         """
-        if hasattr(self.cfg.optim.optimizer, "exclude_bn_bias") and \
-                self.cfg.optim.optimizer.exclude_bn_bias:
+        if hasattr(self.cfg.optim, "exclude_bn_bias") and \
+                self.cfg.optim.exclude_bn_bias:
             params = self.exclude_from_wt_decay(self.named_parameters(), weight_decay=self.cfg.optim.optimizer.weight_decay)
         else:
             params = self.parameters()
