@@ -204,7 +204,8 @@ class MyModel(pl.LightningModule):
         if hasattr(self.cfg.optim, "exclude_bn_bias") and \
                 self.cfg.optim.exclude_bn_bias:
             params = self.exclude_from_wt_decay(self.named_parameters(), weight_decay=self.cfg.optim.optimizer.weight_decay)
-            exclude_bn_bias
+            print("Warning: Excluding-biases-from-weight-decay is not properly implemented yet.")
+            params = self.named_parameters()
         else:
             params = self.parameters()
 
