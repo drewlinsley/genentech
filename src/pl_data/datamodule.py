@@ -60,9 +60,9 @@ TRANSFORM_RECIPES = {
             ]),
     },
     "SIMCLR_COR14": {
-        "train": transforms.Compose([]),
-        "val": transforms.Compose([]),
-        "test": transforms.Compose([]),
+        "train": transforms.Compose([transforms.ToTensor(),]),
+        "val": transforms.Compose([transforms.ToTensor(),]),
+        "test": transforms.Compose([transforms.ToTensor(),]),
         # "train": SimCLRTrainDataTransform(
         #     input_height=224,
         #     gaussian_blur=True,

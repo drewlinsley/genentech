@@ -62,7 +62,7 @@ class SimCLR(LightningModule):
         exclude_bn_bias: bool = False,
         weight_decay: float = 1e-6,
     ):
-
+        super().__init__()
         self.num_nodes = num_nodes
         self.arch = arch
         self.num_samples = num_samples
