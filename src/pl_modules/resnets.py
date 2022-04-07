@@ -8,7 +8,8 @@ from torch.nn import functional as F
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
-from pl_bolts.models.self_supervised.resnets import sclr_resnet18, scrl_resnet50
+from pl_bolts.models.self_supervised.resnets import resnet18 as sclr_resnet18
+from pl_bolts.models.self_supervised.resnets import resnet50 as scrl_resnet50
 # from pl_bolts.models.self_supervised import SimCLR
 
 
