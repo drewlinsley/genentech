@@ -25,7 +25,18 @@ from pl_bolts.optimizers.lr_scheduler import linear_warmup_decay
 
 
 class MyModel(pl.LightningModule):
-    def __init__(self, cfg: DictConfig, name, num_classes, final_nl, loss, self_supervised=False, *args, **kwargs) -> None:
+    def __init__(
+            self,
+            cfg: DictConfig,
+            name,
+            num_classes,
+            final_nl,
+            loss,
+            self_supervised=False,
+            num_samples=False,
+            batch_size=False,
+            *args,
+            **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.cfg = cfg
         self.save_hyperparameters(cfg)
@@ -42,7 +53,11 @@ class MyModel(pl.LightningModule):
         if self.name == "resnet18":
             self.net = resnets.resnet18(pretrained=False, num_classes=num_classes)
         elif self.name == "simclr_resnet18":
-            self.net = resnets.resnet18(pretrained=False, num_classes=num_classes)
+            self.net = resnets.simclr_resnet18(
+                pretrained=False,
+                num_classes=num_classes,
+                num_samples=num_samples,
+                batch_size=batch_size)
         else:
             raise NotImplementedError("Could not find network {}.".format(self.net))
 

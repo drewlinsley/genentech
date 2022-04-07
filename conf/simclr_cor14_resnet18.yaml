@@ -77,6 +77,8 @@ model:
   num_classes: 1
   final_nl: False
   self_supervised: True
+  num_samples: 35000
+  batch_size: ${data.datamodule.batch_size.train}
   loss: nt_xent_loss
 
 optim:
