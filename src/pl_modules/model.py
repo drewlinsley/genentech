@@ -205,7 +205,7 @@ class MyModel(pl.LightningModule):
                 self.cfg.optim.exclude_bn_bias:
             params = self.exclude_from_wt_decay(self.named_parameters(), weight_decay=self.cfg.optim.optimizer.weight_decay)
             print("Warning: Excluding-biases-from-weight-decay is not properly implemented yet.")
-            params = self.named_parameters()
+            params = self.parameters()
         else:
             params = self.parameters()
 
@@ -217,7 +217,7 @@ class MyModel(pl.LightningModule):
             return opt
 
         # Handle schedulers if requested
-        if torch.optim.lr_scheduler.warmup_steps:
+        if self.cfg.optim.lr_scheduler.warmup_steps:
             # Right now this is specific to SimCLR
             lr_scheduler = {
                 "scheduler": torch.optim.lr_scheduler.LambdaLR(

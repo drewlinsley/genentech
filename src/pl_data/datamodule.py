@@ -60,21 +60,24 @@ TRANSFORM_RECIPES = {
             ]),
     },
     "SIMCLR_COR14": {
-        "train": SimCLRTrainDataTransform(
-            input_height=224,
-            gaussian_blur=True,
-            jitter_strength=1.,
-            normalize=normalizations.COR14_normalization),  # noqa
-        "val": SimCLREvalDataTransform(
-            input_height=224,
-            gaussian_blur=False,
-            jitter_strength=0.,
-            normalize=normalizations.COR14_normalization),  # noqa
-        "test": SimCLREvalDataTransform(
-            input_height=224,
-            gaussian_blur=False,
-            jitter_strength=0.,
-            normalize=normalizations.COR14_normalization),  # noqa
+        "train": transforms.Compose([]),
+        "val": transforms.Compose([]),
+        "test": transforms.Compose([]),
+        # "train": SimCLRTrainDataTransform(
+        #     input_height=224,
+        #     gaussian_blur=True,
+        #     jitter_strength=1.,
+        #     normalize=normalizations.COR14_normalization),  # noqa
+        # "val": SimCLREvalDataTransform(
+        #     input_height=224,
+        #     gaussian_blur=False,
+        #     jitter_strength=0.,
+        #     normalize=normalizations.COR14_normalization),  # noqa
+        # "test": SimCLREvalDataTransform(
+        #     input_height=224,
+        #     gaussian_blur=False,
+        #     jitter_strength=0.,
+        #     normalize=normalizations.COR14_normalization),  # noqa
     },
 }
 

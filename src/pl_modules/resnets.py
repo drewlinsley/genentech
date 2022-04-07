@@ -8,7 +8,7 @@ from torch.nn import functional as F
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
-from pl_bolts.models.self_supervised.resnets import resnet18, resnet50
+from pl_bolts.models.self_supervised.resnets import sclr_resnet18, scrl_resnet50
 # from pl_bolts.models.self_supervised import SimCLR
 
 
@@ -80,9 +80,9 @@ class SimCLR(LightningModule):
 
     def init_model(self):
         if self.arch == "resnet18":
-            backbone = resnet18
+            backbone = sclr_resnet18
         elif self.arch == "resnet50":
-            backbone = resnet50
+            backbone = sclr_resnet50
         return backbone(first_conv=self.first_conv, maxpool1=self.maxpool1, return_all_feature_maps=False)
 
     def forward(self, x):

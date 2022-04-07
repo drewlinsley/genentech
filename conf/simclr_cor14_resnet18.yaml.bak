@@ -11,20 +11,20 @@ data:
   datamodule:
     _target_: src.pl_data.datamodule.MyDataModule
     val_proportion: 0.15
-    dataset_name: SIMCLR_COR14  # Label for experiment
+    dataset_name: COR14  # Label for experiment
     transform_recipe: SIMCLR_COR14
     datasets:
-      SIMCLR_COR14:
+      COR14:
         train:
-          _target_: src.pl_data.dataset.SIMCLR_COR14
+          _target_: src.pl_data.dataset.COR14
           train: True
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
         val:
-          _target_: src.pl_data.dataset.SIMCLR_COR14
+          _target_: src.pl_data.dataset.COR14
           train: False
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
         test:
-          _target_: src.pl_data.dataset.SIMCLR_COR14
+          _target_: src.pl_data.dataset.COR14
           train: False
           path: /content/drive/MyDrive/genentech_data/BackgroundSubtractionByPanelBatch/COR14
     num_workers:
@@ -90,10 +90,9 @@ optim:
     weight_decay: 0.
 
   lr_scheduler:
-    _target_: torch.optim.lr_scheduler.MultiStepLR
-    milestones: [700000,]
-    # warmup_steps: 2734  #  (70000 // 256) * 10
-    # total_steps: 7000000  # 70000 * 100
+    _target_: torch.optim.lr_scheduler.LambdaLR
+    warmup_steps: 2734  #  (70000 // 256) * 10
+    total_steps: 7000000  # 70000 * 100
 
   exclude_bn_bias: True
   use_lr_scheduler: True
@@ -109,7 +108,7 @@ train:
     fast_dev_run: False # Enable this for debug purposes
     gpus: 1
     precision: 32
-    max_steps: 7000000  # ${optim.lr_scheduler.total_steps}
+    max_steps: ${optim.lr_scheduler.total_steps}
     # accumulate_grad_batches: 1
     # num_sanity_val_steps: 2
     gradient_clip_val: 10000000.0  # 10.
