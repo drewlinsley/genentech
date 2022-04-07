@@ -73,7 +73,7 @@ logging:
     log_momentum: False
 model:
   _target_: src.pl_modules.model.MyModel
-  name: resnet18
+  name: simclr_resnet18
   num_classes: 1
   final_nl: False
   self_supervised: True
