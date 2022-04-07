@@ -138,121 +138,83 @@ class SIMCLR_COR14(Dataset):
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
+
+        transform = SimCLRTrainDataTransform(
+            input_height=300,
+            normalize=normalizations.COR14_normalization,
+            gaussian_blur=False)
+        (xi, xj) = transform(img)
         label = 0  # Set a fixed label for now. Dummy.
-        return img, label
+        return (xi, xj), label
 
     def __repr__(self) -> str:
         return f"MyDataset({self.name}, {self.path})"
 
 
-class DeadRect(Dataset):
-    def __init__(
-        self, path: ValueNode, train: bool, cfg: DictConfig, transform, **kwargs
-    ):
-        super().__init__()
-        self.cfg = cfg
-        self.path = path
-        self.train = train
-        self.transform = transform
+class SimCLRTrainDataTransform:
+    """Transforms for SimCLR.
+    Transform::
+        RandomResizedCrop(size=self.input_height)
+        RandomHorizontalFlip()
+        RandomApply([color_jitter], p=0.8)
+        RandomGrayscale(p=0.2)
+        GaussianBlur(kernel_size=int(0.1 * self.input_height))
+        transforms.ToTensor()
+    Example::
+        from pl_bolts.models.self_supervised.simclr.transforms import SimCLRTrainDataTransform
+        transform = SimCLRTrainDataTransform(input_height=32)
+        x = sample()
+        (xi, xj) = transform(x)
+    """
 
-        if self.train:
-            csv_path = join(self.path, "train.csv")
-            self.path = join(self.path, "train")
+    def __init__(
+        self, input_height: int = 224, gaussian_blur: bool = False, jitter_strength: float = 1.0, normalize=None
+    ) -> None:
+
+        self.jitter_strength = jitter_strength
+        self.input_height = input_height
+        self.gaussian_blur = gaussian_blur
+        self.normalize = normalize
+
+        self.color_jitter = transforms.ColorJitter(
+            0.8 * self.jitter_strength,
+            0.8 * self.jitter_strength,
+            0.8 * self.jitter_strength,
+            0.2 * self.jitter_strength,
+        )
+
+        data_transforms = [
+            transforms.RandomResizedCrop(size=self.input_height),
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomApply([self.color_jitter], p=0.8),
+            transforms.RandomGrayscale(p=0.2),
+        ]
+
+        if self.gaussian_blur:
+            kernel_size = int(0.1 * self.input_height)
+            if kernel_size % 2 == 0:
+                kernel_size += 1
+
+            data_transforms.append(transforms.GaussianBlur(kernel_size=kernel_size))
+
+        data_transforms = transforms.Compose(data_transforms)
+
+        if normalize is None:
+            self.final_transform = transforms.ToTensor()
         else:
-            csv_path = join(self.path, "test.csv")
-            self.path = join(self.path, "test")
+            self.final_transform = transforms.Compose([transforms.ToTensor(), normalize])
 
-        with open(csv_path, 'r') as fob:
-            self.file_list = csv.DictReader(fob)
-            self.file_list = list(self.file_list)
-            print(len(self.file_list), self.train, self.path)
+        self.train_transform = transforms.Compose([data_transforms, self.final_transform])
 
-    def __len__(self) -> int:
-        return len(self.file_list)
+        # # add online train transform of the size of global view
+        # self.online_transform = transforms.Compose(
+        #     [transforms.RandomResizedCrop(self.input_height), transforms.RandomHorizontalFlip(), self.final_transform]
+        # )
 
-    def __getitem__(self, index: int):
-        file_name = self.file_list[index]['fname']
-        img = load_image(join(self.path, file_name))
-        img = self.transform(img)
-        label = int(self.file_list[index]['same'] == 'True')
-        return img, label
+    def __call__(self, sample):
+        transform = self.train_transform
 
-    def __repr__(self) -> str:
-        return f"MyDataset({self.name}, {self.path})"
+        xi = transform(sample)
+        xj = transform(sample)
 
-
-class PFClass(Dataset):
-    def __init__(
-        self, path: ValueNode, train: bool, rand_color_invert_p: float, cfg: DictConfig, transform, **kwargs
-    ):
-        super().__init__()
-        self.cfg = cfg
-        self.path = path
-        self.train = train
-        self.transform = transform
-        self.rand_color_invert_p = rand_color_invert_p
-        self.norma = transforms.Normalize((0.5), (0.5))
-
-        #self.file_list = [join(self.path, f) for f in listdir(self.path) if isfile(join(self.path, f))]
-        self.file_list = []
-        with open(self.path, 'r') as fob:
-            self.file_list = fob.read().splitlines()
-            self.file_list = list(self.file_list)
-            print("Found", len(self.file_list), "files for train=", self.train, "from", self.path)
-
-    def __len__(self) -> int:
-        return len(self.file_list)
-
-    def __getitem__(self, index: int):
-        file_name = self.file_list[index]
-        img = load_image(file_name)
-        img = self.transform(img)
-        if torch.rand(1).item() < self.rand_color_invert_p:
-            img = invert(img)
-        img = self.norma(img)
-        label = int(file_name[-5])
-        return img, label
-
-    def __repr__(self) -> str:
-        return f"MyDataset({self.name}, {self.path})"
-
-
-class PFClassColour(Dataset):
-    def __init__(
-        self, path: ValueNode, train: bool, rand_color_invert_p: float, cfg: DictConfig, transform, **kwargs
-    ):
-        super().__init__()
-        self.cfg = cfg
-        self.path = path
-        self.train = train
-        self.transform = transform
-        self.rand_color_invert_p = rand_color_invert_p
-        self.norma = transforms.Normalize((0.5), (0.5))
-
-        #self.file_list = [join(self.path, f) for f in listdir(self.path) if isfile(join(self.path, f))]
-        self.file_list = []
-        with open(self.path, 'r') as fob:
-            self.file_list = fob.read().splitlines()
-            self.file_list = list(self.file_list)
-            print("Found", len(self.file_list), "files for train=", self.train, "from", self.path)
-
-    def __len__(self) -> int:
-        return len(self.file_list)
-
-    def __getitem__(self, index: int):
-        file_name = self.file_list[index]
-        img = load_image(file_name)
-        img = self.transform(img)
-        label = int(file_name[-5])
-        if self.rand_color_invert_p > 0:
-            rnd = torch.rand(1).item()
-            if rnd < 0.5:  # rnd < 0.33:
-                img = colour(img, ch=0, num_ch=2)
-            elif rnd >= 0.5:  # rnd > 0.33 and rnd < 0.66:
-                img = colour(img, ch=1, num_ch=2)
-                # if label == 1:
-                #     label += 1  # Add 2 positive outputs
-        return img, label
-
-    def __repr__(self) -> str:
-        return f"MyDataset({self.name}, {self.path})"
+        return xi, xj  # , self.online_transform(sample)
