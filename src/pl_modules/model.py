@@ -217,7 +217,7 @@ class MyModel(pl.LightningModule):
             return opt
 
         # Handle schedulers if requested
-        if self.cfg.optim.lr_scheduler.warmup_steps:
+        if 0:  # Need to fix this. self.cfg.optim.lr_scheduler.warmup_steps:
             # Right now this is specific to SimCLR
             lr_scheduler = {
                 "scheduler": torch.optim.lr_scheduler.LambdaLR(
