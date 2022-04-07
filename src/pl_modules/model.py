@@ -56,7 +56,7 @@ class MyModel(pl.LightningModule):
 
     def step(self, x, y) -> Dict[str, torch.Tensor]:
         if self.self_supervised:
-            z1, z2 = self.shared_step(x)
+            z1, z2 = self.net.shared_step(x)
             loss = self.loss(z1, z2)
         else:
             logits = self(x)
