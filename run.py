@@ -108,8 +108,28 @@ def run(cfg: DictConfig) -> None:
     # Instantiate the callbacks
     callbacks: List[Callback] = build_callbacks(cfg=cfg)
 
-    # Logger instantiation/configuration
+    if cfg.train.ckpt:
+        print("Loading checkpoints from ", cfg.train.ckpt)
+        model = weights_update(
+            model=model,
+            checkpoint=torch.load(cfg.train.ckpt))
+    else:
+        print("Evaluating with random weights.")
 
+    if cfg.train.eval_only:
+        trainer = pl.Trainer(
+            logger=False,
+            default_root_dir=hydra_dir,  # Path('./experiments/train'),
+            val_check_interval=cfg.logging.val_check_interval,
+            log_every_n_steps=10,
+            **cfg.train.pl_trainer,
+        )
+
+        hydra.utils.log.info(f"EVAL ONLY SELECTED. Starting testing!")
+        trainer.test(model=model, datamodule=datamodule)
+        sys.exit()
+
+    # Logger instantiation/configuration
     wandb_logger = None
     if "wandb" in cfg.logging:
         hydra.utils.log.info(f"Instantiating <WandbLogger>")
