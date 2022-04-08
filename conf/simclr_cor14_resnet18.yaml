@@ -33,9 +33,9 @@ data:
       test: 4
 
     batch_size:
-      train: 256  # 240  # 128
-      val: 256 # 240  # 128
-      test: 256  # 128
+      train: 64  # 240  # 128
+      val: 64 # 240  # 128
+      test: 64  # 128
 hydra:
   run:
     dir: ./experiments/${now:%Y-%m-%d}/${now:%H-%M-%S}
@@ -53,11 +53,11 @@ hydra:
   #   batch_size: auto
 
 logging:
-  n_elements_to_log: 32
+  n_elements_to_log: 0  # 32
   normalize_visualization: True
 
   # log frequency
-  val_check_interval: 1.0
+  val_check_interval: 1000  # 1.0  # Never check val for now
   progress_bar_refresh_rate: 20
 
   wandb:

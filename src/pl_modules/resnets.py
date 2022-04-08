@@ -54,7 +54,7 @@ class SimCLR(LightningModule):
         batch_size: int,
         num_nodes: int = 1,
         arch: str = "resnet50",
-        hidden_mlp: int = 2048,
+        hidden_mlp: int = 512,
         feat_dim: int = 128,
         first_conv: bool = True,
         maxpool1: bool = True,
@@ -93,7 +93,7 @@ class SimCLR(LightningModule):
     def shared_step(self, batch):
 
         # final image in tuple is for online eval
-        (img1, img2, _), y = batch
+        img1, img2 = batch
 
         # get h representations, bolts resnet returns a list
         h1 = self(img1)

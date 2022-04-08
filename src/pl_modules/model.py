@@ -73,6 +73,7 @@ class MyModel(pl.LightningModule):
         if self.self_supervised:
             import pdb;pdb.set_trace()
             z1, z2 = self.net.shared_step(x)
+            logits = z1
             loss = self.loss(z1, z2)
         else:
             logits = self(x)

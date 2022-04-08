@@ -12,6 +12,7 @@ from torch.nn import functional as F
 import numpy as np
 from glob2 import glob
 from skimage import io
+from src.pl_data import normalizations
 
 
 DATADIR = "data/"
@@ -124,6 +125,11 @@ class SIMCLR_COR14(Dataset):
         self.minval = 0
         self.denom = self.maxval - self.minval
 
+        self.mu = 1086.6762200888888 / self.maxval
+        self.sd = 2019.9389348809887 / self.maxval
+        self.mu *= 255
+        self.sd *= 255
+
         # List all the files
         print("Globbing files for COR14, this may take a while...")
         self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
@@ -137,13 +143,18 @@ class SIMCLR_COR14(Dataset):
         img = io.imread(img, plugin='pil')
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
-        img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
+        # img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
 
         transform = SimCLRTrainDataTransform(
-            input_height=300,
-            normalize=normalizations.COR14_normalization,
+            input_height=200,
+            # normalize=normalizations.COR14_normalization,
             gaussian_blur=False)
+        img = Image.fromarray((img * 255).astype(np.uint8))
         (xi, xj) = transform(img)
+        xi = xi.tile(3, 1, 1)
+        xj = xj.tile(3, 1, 1)
+        xi = (xi - self.mu) / self.sd
+        xj = (xj - self.mu) / self.sd
         label = 0  # Set a fixed label for now. Dummy.
         return (xi, xj), label
 
