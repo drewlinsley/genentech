@@ -71,7 +71,6 @@ class MyModel(pl.LightningModule):
 
     def step(self, x, y) -> Dict[str, torch.Tensor]:
         if self.self_supervised:
-            import pdb;pdb.set_trace()
             z1, z2 = self.net.shared_step(x)
             logits = z1
             loss = self.loss(z1, z2)
