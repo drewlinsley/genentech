@@ -90,6 +90,8 @@ class COR14(Dataset):
         self.maxval = 33000
         self.minval = 0
         self.denom = self.maxval - self.minval
+        self.control = ["20CAG30", "20CAG44", "20CAG65"]
+        self.disease = ["72CAG2", "72CAG4", "72CAG9", "72CAG12"]
 
         # List all the files
         print("Globbing files for COR14, this may take a while...")
@@ -100,12 +102,20 @@ class COR14(Dataset):
         return self.data_len
 
     def __getitem__(self, index: int):
-        img = self.files[index]
-        img = io.imread(img, plugin='pil')
+        fn = self.files[index]
+        img = io.imread(fn, plugin='pil')
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
         label = 0  # Set a fixed label for now. Dummy.
+
+        cell_line = fn.split(os.path.sep)[-2]
+        if cell_line in self.control:
+            label = 0
+        elif cell_line in self.disease:
+            label = 1
+        else:
+            raise RuntimeError("Found label={} but expecting labels in [1, 2].".format(label))
         return img, label
 
     def __repr__(self) -> str:
@@ -124,6 +134,8 @@ class SIMCLR_COR14(Dataset):
         self.maxval = 33000
         self.minval = 0
         self.denom = self.maxval - self.minval
+        self.control = ["20CAG30", "20CAG44", "20CAG65"]
+        self.disease = ["72CAG2", "72CAG4", "72CAG9", "72CAG12"]
 
         self.mu = 1086.6762200888888 / self.maxval
         self.sd = 2019.9389348809887 / self.maxval
@@ -155,7 +167,13 @@ class SIMCLR_COR14(Dataset):
         xj = xj.tile(3, 1, 1)
         xi = (xi - self.mu) / self.sd
         xj = (xj - self.mu) / self.sd
-        label = 0  # Set a fixed label for now. Dummy.
+        cell_line = fn.split(os.path.sep)[-2]
+        if cell_line in self.control:
+            label = 0
+        elif cell_line in self.disease:
+            label = 1
+        else:
+            raise RuntimeError("Found label={} but expecting labels in [1, 2].".format(label))
         return (xi, xj), label
 
     def __repr__(self) -> str:
