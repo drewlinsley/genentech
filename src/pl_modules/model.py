@@ -142,7 +142,7 @@ class MyModel(pl.LightningModule):
         }
 
     def validation_epoch_end(self, outputs: List[Any]) -> None:
-        integrated_gradients = GuidedGradCam(self, self.net.layer4)
+        # integrated_gradients = GuidedGradCam(self, self.net.layer4)
         batch_size = self.cfg.data.datamodule.batch_size.val
         images = []
         for output_element in iterate_elements_in_batches(
@@ -161,28 +161,28 @@ class MyModel(pl.LightningModule):
             )
 
             # Add gradient visualization if requested
-            attributions_ig_nt = integrated_gradients.attribute(
-                output_element["image"].unsqueeze(0),
-                target=output_element["y_true"])
-            vz = viz.visualize_image_attr(
-                np.transpose(attributions_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0)),
-                np.transpose(output_element["image"].cpu().detach().numpy(), (1, 2, 0)),
-                method='blended_heat_map',
-                show_colorbar=True,
-                use_pyplot=False,
-                sign='positive',
-                outlier_perc=1)
-            images_feat_viz.append(
-                wandb.Image(
-                    vz[0],
-                    caption=caption,
-                ))
-            plt.close(vz[0])
+            # attributions_ig_nt = integrated_gradients.attribute(
+            #     output_element["image"].unsqueeze(0),
+            #     target=output_element["y_true"])
+            # vz = viz.visualize_image_attr(
+            #     np.transpose(attributions_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0)),
+            #     np.transpose(output_element["image"].cpu().detach().numpy(), (1, 2, 0)),
+            #     method='blended_heat_map',
+            #     show_colorbar=True,
+            #     use_pyplot=False,
+            #     sign='positive',
+            #     outlier_perc=1)
+            # images_feat_viz.append(
+            #     wandb.Image(
+            #         vz[0],
+            #         caption=caption,
+            #     ))
+            # plt.close(vz[0])
 
         self.logger.experiment.log({"Validation Images": images}, step=self.global_step)
-        self.logger.experiment.log(
-            {"Validation Images Viz": images_feat_viz},
-            step=self.global_step)
+        # self.logger.experiment.log(
+        #     {"Validation Images Viz": images_feat_viz},
+        #     step=self.global_step)
 
     def test_epoch_end(self, outputs: List[Any]) -> None:
         batch_size = self.cfg.data.datamodule.batch_size.test
