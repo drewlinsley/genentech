@@ -12,7 +12,7 @@ from torch.optim import Optimizer
 import numpy as np
 import matplotlib.pyplot as plt
 
-from captum.attr import IntegratedGradients
+from captum.attr import IntegratedGradients, GuidedGradCam
 from captum.attr import NoiseTunnel
 from captum.attr import visualization as viz
 
