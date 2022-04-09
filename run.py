@@ -20,7 +20,7 @@ from pytorch_lightning.callbacks import (
 )
 from pytorch_lightning.loggers import WandbLogger
 
-from src.common.utils import load_envs
+from src.common.utils import load_envs, weights_update
 import torch
 torch.backends.cudnn.benchmark = True
 # Set the cwd to the project root
