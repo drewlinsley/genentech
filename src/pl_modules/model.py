@@ -142,7 +142,7 @@ class MyModel(pl.LightningModule):
         }
 
     def validation_epoch_end(self, outputs: List[Any]) -> None:
-        integrated_gradients = GuidedGradCam(self, self.net.layer4[1].conv1)
+        integrated_gradients = GuidedGradCam(self, self.net.layer4)
         batch_size = self.cfg.data.datamodule.batch_size.val
         images = []
         for output_element in iterate_elements_in_batches(
