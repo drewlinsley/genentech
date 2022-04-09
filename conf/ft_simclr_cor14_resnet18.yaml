@@ -103,7 +103,7 @@ train:
 
   # training
   eval_only: False
-  ckpt: /content/drive/MyDrive/genentech/experiments/2022-04-08/03-07-23/experiments/2022-04-08/03-07-23/genentech/2ueg4ztm/checkpoints/epoch=160-step=153440.ckpt
+  ckpt: /content/drive/MyDrive/genentech/experiments/2022-04-08/03-07-23/experiments/2022-04-08/03-07-23/genentech/2ueg4ztm/checkpoints/epoch=172-step=164888.ckpt
   pl_trainer:
     fast_dev_run: False # Enable this for debug purposes
     gpus: 1
