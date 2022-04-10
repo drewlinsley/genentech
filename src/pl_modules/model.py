@@ -152,7 +152,11 @@ class MyModel(pl.LightningModule):
         }
 
     def validation_epoch_end(self, outputs: List[Any]) -> None:
-        integrated_gradients = GuidedGradCam(self, self.net.layer4)
+        if "encoder" in self.net:
+            layer = self.net.encoder.layer4
+        else:
+            layer = self.net.layer4
+        integrated_gradients = GuidedGradCam(self, layer)
         batch_size = self.cfg.data.datamodule.batch_size.val
         images = []
         for output_element in iterate_elements_in_batches(
@@ -171,7 +175,6 @@ class MyModel(pl.LightningModule):
             )
 
             # Add gradient visualization
-            import pdb;pdb.set_trace()
             attributions_ig_nt = integrated_gradients.attribute(
                 output_element["image"].unsqueeze(0),
                 target=output_element["y_true"])
