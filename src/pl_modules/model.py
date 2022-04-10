@@ -82,7 +82,11 @@ class MyModel(pl.LightningModule):
             loss = self.loss(z1, z2)
         else:
             logits = self(x)
-            loss = self.loss(self.final_nl(logits, dim=-1), y)
+            if logits.shape > 1:
+                loss = self.loss(self.final_nl(logits, dim=-1), y)
+            else:
+                logits = logits.ravel()
+                loss = self.loss(self.final_nl(logits), y)
         return {"logits": logits, "loss": loss, "y": y, "x": x}
 
     def training_step(self, batch: Any, batch_idx: int) -> torch.Tensor:
