@@ -72,7 +72,8 @@ class SimCLR(LightningModule):
         maxpool1: bool = True,
         exclude_bn_bias: bool = False,
         weight_decay: float = 1e-6,
-        fc_output: bool = False
+        fc_output: bool = False,
+        num_classes: int = 1000
     ):
         super().__init__()
         self.num_nodes = num_nodes
@@ -99,7 +100,7 @@ class SimCLR(LightningModule):
             backbone = sclr_resnet18
         elif self.arch == "resnet50":
             backbone = sclr_resnet50
-        return backbone(first_conv=self.first_conv, maxpool1=self.maxpool1, return_all_feature_maps=False)
+        return backbone(first_conv=self.first_conv, maxpool1=self.maxpool1, return_all_feature_maps=False, num_classes=num_classes)
 
     def forward(self, x):
         # bolts resnet returns a list
