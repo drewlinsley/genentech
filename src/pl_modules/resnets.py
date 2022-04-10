@@ -31,7 +31,12 @@ def simclr_resnet18(pretrained=False, num_classes=None, num_samples=None, batch_
 def simclr_resnet18_transfer(pretrained=False, num_classes=None, num_samples=None, batch_size=None):
     assert num_samples is not None, "You must pass the number of samples to the SimCLR class."
     assert batch_size is not None, "You must pass the batch size to the SimCLR class."
-    model = SimCLR(num_samples=num_samples, batch_size=batch_size, fc_output=True, arch="resnet18")
+    model = SimCLR(
+        num_classes=num_classes,
+        num_samples=num_samples,
+        batch_size=batch_size,
+        fc_output=True,
+        arch="resnet18")
     return model
 
 
