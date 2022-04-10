@@ -184,7 +184,7 @@ class MyModel(pl.LightningModule):
                 method='blended_heat_map',
                 show_colorbar=True,
                 use_pyplot=False,
-                sign='positive',
+                # sign='positive',
                 outlier_perc=0)
             images_feat_viz.append(
                 wandb.Image(

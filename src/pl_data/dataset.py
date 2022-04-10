@@ -90,12 +90,13 @@ class COR14(Dataset):
         self.maxval = 33000
         self.minval = 0
         self.denom = self.maxval - self.minval
-        self.control = ["20CAG30", "20CAG44", "20CAG65"]
-        self.disease = ["72CAG2", "72CAG4", "72CAG9", "72CAG12"]
+        self.control = ["20CAG30"]
+        self.disease = ["72CAG12"]
 
         # List all the files
         print("Globbing files for COR14, this may take a while...")
-        self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
+        self.files = glob(os.path.join(self.path, "**", "20CAG30", "*.tif")) + glob(os.path.join(self.path, "**", "72CAG12", "*.tif"))
+        # self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
         self.files = np.asarray(self.files)
         np.random.seed(42)
         shuffle_idx = np.random.permutation(len(self.files))
