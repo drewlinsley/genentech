@@ -31,7 +31,7 @@ def simclr_resnet18(pretrained=False, num_classes=None, num_samples=None, batch_
 def simclr_resnet18_transfer(pretrained=False, num_classes=None, num_samples=None, batch_size=None):
     assert num_samples is not None, "You must pass the number of samples to the SimCLR class."
     assert batch_size is not None, "You must pass the batch size to the SimCLR class."
-    model = SimCLR(num_samples=num_samples, batch_size=batch_size, arch="resnet18")
+    model = SimCLR(num_samples=num_samples, batch_size=batch_size, fc_output=True, arch="resnet18")
     return model
 
 
@@ -67,6 +67,7 @@ class SimCLR(LightningModule):
         maxpool1: bool = True,
         exclude_bn_bias: bool = False,
         weight_decay: float = 1e-6,
+        fc_output: bool = False
     ):
         super().__init__()
         self.num_nodes = num_nodes
@@ -86,6 +87,10 @@ class SimCLR(LightningModule):
 
         self.projection = Projection(input_dim=self.hidden_mlp, hidden_dim=self.hidden_mlp, output_dim=self.feat_dim)
 
+        self.fc_output = fc_output
+        if self.fc_output:
+            self.fc = nn.Linear(512 * block.expansion, num_classes)
+
     def init_model(self):
         if self.arch == "resnet18":
             backbone = sclr_resnet18
@@ -95,8 +100,10 @@ class SimCLR(LightningModule):
 
     def forward(self, x):
         # bolts resnet returns a list
-        import pdb;pdb.set_trace()
-        return self.encoder(x)[-1]
+        output = self.encoder(x)[-1]
+        if self.fc_output:
+            output = self.fc(output)
+        return output
 
     def shared_step(self, batch):
 
