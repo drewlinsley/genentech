@@ -58,6 +58,12 @@ class MyModel(pl.LightningModule):
                 num_classes=num_classes,
                 num_samples=num_samples,
                 batch_size=batch_size)
+        elif self.name == "simclr_resnet18_transfer":
+            self.net = resnets.simclr_resnet18_transfer(
+                pretrained=False,
+                num_classes=num_classes,
+                num_samples=num_samples,
+                batch_size=batch_size)
         else:
             raise NotImplementedError("Could not find network {}.".format(self.net))
 
