@@ -28,6 +28,13 @@ def simclr_resnet18(pretrained=False, num_classes=None, num_samples=None, batch_
     return model
 
 
+def simclr_resnet18_transfer(pretrained=False, num_classes=None, num_samples=None, batch_size=None):
+    assert num_samples is not None, "You must pass the number of samples to the SimCLR class."
+    assert batch_size is not None, "You must pass the batch size to the SimCLR class."
+    model = SimCLR(num_samples=num_samples, batch_size=batch_size, arch="resnet18")
+    return model
+
+
 class Projection(nn.Module):
     def __init__(self, input_dim=2048, hidden_dim=2048, output_dim=128):
         super().__init__()
@@ -88,6 +95,7 @@ class SimCLR(LightningModule):
 
     def forward(self, x):
         # bolts resnet returns a list
+        import pdb;pdb.set_trace()
         return self.encoder(x)[-1]
 
     def shared_step(self, batch):
