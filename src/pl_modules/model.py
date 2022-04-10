@@ -185,7 +185,7 @@ class MyModel(pl.LightningModule):
                 show_colorbar=True,
                 use_pyplot=False,
                 sign='positive',
-                outlier_perc=1)
+                outlier_perc=0)
             images_feat_viz.append(
                 wandb.Image(
                     vz[0],
