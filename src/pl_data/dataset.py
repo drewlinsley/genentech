@@ -96,6 +96,7 @@ class COR14(Dataset):
         # List all the files
         print("Globbing files for COR14, this may take a while...")
         self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
+        self.files = np.asarray(self.files)
         np.random.seed(42)
         shuffle_idx = np.random.permutation(len(self.files))
         self.files = self.files[shuffle_idx]
@@ -148,6 +149,7 @@ class SIMCLR_COR14(Dataset):
         # List all the files
         print("Globbing files for COR14, this may take a while...")
         self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
+        self.files = np.asarray(self.files)
         np.random.seed(42)
         shuffle_idx = np.random.permutation(len(self.files))
         self.files = self.files[shuffle_idx]
