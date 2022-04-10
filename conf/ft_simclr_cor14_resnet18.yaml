@@ -71,12 +71,13 @@ logging:
   lr_monitor:
     logging_interval: "step"
     log_momentum: False
+
 model:
   _target_: src.pl_modules.model.MyModel
   name: simclr_resnet18_transfer
-  num_classes: 1
-  final_nl: log_softmax
-  loss: nll_loss
+  num_classes: 2
+  final_nl: False
+  loss: cce_loss
 
 optim:
   optimizer:
