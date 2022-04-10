@@ -104,7 +104,6 @@ class SimCLR(LightningModule):
     def forward(self, x):
         # bolts resnet returns a list
         output = self.encoder(x)[-1]
-        import pdb;pdb.set_trace()
         if self.fc_output:
             output = self.encoder.fc(output)
         return output
