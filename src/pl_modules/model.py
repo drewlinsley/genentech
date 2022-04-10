@@ -175,6 +175,7 @@ class MyModel(pl.LightningModule):
             )
 
             # Add gradient visualization
+            import pdb;pdb.set_trace()
             attributions_ig_nt = integrated_gradients.attribute(
                 output_element["image"].unsqueeze(0),
                 target=output_element["y_true"])
