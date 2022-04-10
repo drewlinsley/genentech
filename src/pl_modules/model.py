@@ -152,7 +152,7 @@ class MyModel(pl.LightningModule):
         }
 
     def validation_epoch_end(self, outputs: List[Any]) -> None:
-        if "encoder" in self.net:
+        if hasattr(self.net, "encoder"):
             layer = self.net.encoder.layer4
         else:
             layer = self.net.layer4
