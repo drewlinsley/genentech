@@ -15,7 +15,7 @@ def weights_update(model, checkpoint):
         if k in model_dict:
             pretrained_dict[k] = v
     model_dict.update(pretrained_dict)
-    model.load_state_dict(model_dict)
+    model.load_state_dict(model_dict, strict=False)
     return model
 
 
