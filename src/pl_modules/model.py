@@ -158,7 +158,7 @@ class MyModel(pl.LightningModule):
             layer = self.net.layer4
         integrated_gradients = GuidedGradCam(self, layer)
         batch_size = self.cfg.data.datamodule.batch_size.val
-        images = []
+        images, images_feat_viz = [], []
         for output_element in iterate_elements_in_batches(
             outputs, batch_size, self.cfg.logging.n_elements_to_log
         ):  
