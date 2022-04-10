@@ -88,8 +88,6 @@ class SimCLR(LightningModule):
         self.projection = Projection(input_dim=self.hidden_mlp, hidden_dim=self.hidden_mlp, output_dim=self.feat_dim)
 
         self.fc_output = fc_output
-        if self.fc_output:
-            self.fc = nn.Linear(512 * block.expansion, num_classes)
 
     def init_model(self):
         if self.arch == "resnet18":
@@ -101,8 +99,9 @@ class SimCLR(LightningModule):
     def forward(self, x):
         # bolts resnet returns a list
         output = self.encoder(x)[-1]
+        import pdb;pdb.set_trace()
         if self.fc_output:
-            output = self.fc(output)
+            output = self.encoder.fc(output)
         return output
 
     def shared_step(self, batch):
