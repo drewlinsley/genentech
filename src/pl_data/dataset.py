@@ -160,8 +160,8 @@ class SIMCLR_COR14(Dataset):
         return self.data_len
 
     def __getitem__(self, index: int):
-        img = self.files[index]
-        img = io.imread(img, plugin='pil')
+        fn = self.files[index]
+        img = io.imread(fn, plugin='pil')
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         # img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
