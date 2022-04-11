@@ -95,7 +95,11 @@ class COR14(Dataset):
 
         # List all the files
         print("Globbing files for COR14, this may take a while...")
-        self.files = glob(os.path.join(self.path, "**", "20CAG30", "*.tif")) + glob(os.path.join(self.path, "**", "72CAG12", "*.tif"))
+        self.c1 = glob(os.path.join(self.path, "**", "20CAG30", "*.tif"))
+        self.c2 = glob(os.path.join(self.path, "**", "72CAG12", "*.tif"))
+        min_files = min(len(self.c1), len(self.c2))
+        print("Using {} files".format(min_files))
+        self.files = self.c1[:min_files] + self.c2[min_files]
         # self.files = glob(os.path.join(self.path, "**", "**", "*.tif"))
         self.files = np.asarray(self.files)
         np.random.seed(42)
