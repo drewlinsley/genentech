@@ -116,7 +116,6 @@ class COR14(Dataset):
         img = img.astype(np.float32)
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
-        label = 0  # Set a fixed label for now. Dummy.
 
         cell_line = fn.split(os.path.sep)[-2]
         if cell_line in self.control:
