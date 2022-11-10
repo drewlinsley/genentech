@@ -15,7 +15,6 @@ from pytorch_lightning.callbacks import (
     EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
-    ProgressBar,
     TQDMProgressBar
 )
 from pytorch_lightning.loggers import WandbLogger
