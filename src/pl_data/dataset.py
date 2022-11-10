@@ -130,6 +130,57 @@ class COR14(Dataset):
         return f"MyDataset({self.name}, {self.path})"
 
 
+class JAK(Dataset):
+    def __init__(
+        self, path: ValueNode, train: bool, cfg: DictConfig, transform, **kwargs
+    ):
+        super().__init__()
+        self.cfg = cfg
+        self.path = path
+        self.train = train
+        self.transform = transform
+        self.maxval = 33000
+        self.minval = 0
+        self.denom = self.maxval - self.minval
+        self.control = ["NN0005319"]
+        self.disease = ["NN0005320"]
+
+        # List all the files
+        print("Globbing files for JAK, this may take a while...")
+        self.c1 = glob(os.path.join(self.path, "**", "Soma", self.control, "*.tif"))
+        self.c2 = glob(os.path.join(self.path, "**", "Soma", self.disease, "*.tif"))
+        min_files = min(len(self.c1), len(self.c2))
+        print("Using {} files".format(min_files))
+        self.files = self.c1[:min_files] + self.c2[:min_files]
+        self.files = np.asarray(self.files)
+        np.random.seed(42)
+        shuffle_idx = np.random.permutation(len(self.files))
+        self.files = self.files[shuffle_idx]
+        self.data_len = len(self.files)
+
+    def __len__(self) -> int:
+        return self.data_len
+
+    def __getitem__(self, index: int):
+        fn = self.files[index]
+        img = io.imread(fn, plugin='pil')
+        img = img.astype(np.float32)
+        img = (img - self.minval) / self.denom  # Normalize to [0, 1]
+        img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
+
+        cell_line = fn.split(os.path.sep)[-2]
+        if cell_line in self.control:
+            label = 0
+        elif cell_line in self.disease:
+            label = 1
+        else:
+            raise RuntimeError("Found label={} but expecting labels in [1, 2].".format(label))
+        return img, label
+
+    def __repr__(self) -> str:
+        return f"MyDataset({self.name}, {self.path})"
+
+
 class SIMCLR_COR14(Dataset):
     def __init__(
         self, path: ValueNode, train: bool, cfg: DictConfig, transform, **kwargs
