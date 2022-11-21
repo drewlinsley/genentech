@@ -20,7 +20,7 @@ def resnet18(pretrained=False, num_classes=None, num_samples=None, batch_size=No
     assert num_classes is not None, "You must pass the number of classes to your model."
     # model = torchvision.models.resnet18(pretrained=False, num_classes=num_classes)
     import pdb;pdb.set_trace()
-    model = normal_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
+    model = sclr_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
     # model.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
     # model.maxpool = nn.Identity()
     import pdb;pdb.set_trace()
