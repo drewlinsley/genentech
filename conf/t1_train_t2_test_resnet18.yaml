@@ -22,11 +22,11 @@ data:
         val:
           _target_: src.pl_data.dataset.JAK
           train: False
-          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plat1/FIJI_All_T1
+          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plate1/FIJI_All_T1
         test:
           _target_: src.pl_data.dataset.JAK
           train: False
-          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plat1/FIJI_All_T1
+          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plate1/FIJI_All_T1
     num_workers:
       train: 4
       val: 4
