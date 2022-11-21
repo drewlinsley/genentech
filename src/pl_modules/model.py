@@ -178,7 +178,6 @@ class MyModel(pl.LightningModule):
             attributions_ig_nt = integrated_gradients.attribute(
                 output_element["image"].unsqueeze(0),
                 target=output_element["y_true"])
-            import pdb;pdb.set_trace()
             vz = viz.visualize_image_attr(
                 np.transpose(attributions_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0)),
                 np.transpose(output_element["image"].cpu().detach().numpy(), (1, 2, 0)),
