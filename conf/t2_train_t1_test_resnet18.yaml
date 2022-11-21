@@ -10,23 +10,23 @@ core:
 data:
   datamodule:
     _target_: src.pl_data.datamodule.MyDataModule
-    val_proportion: 0.15
-    dataset_name: COR14  # Label for experiment
+    val_proportion: 0.10
+    dataset_name: JAK  # Label for experiment
     transform_recipe: ${data.datamodule.dataset_name}
     datasets:
-      COR14:
+      JAK:
         train:
-          _target_: src.pl_data.dataset.COR14
+          _target_: src.pl_data.dataset.JAK
           train: True
           path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plat1/FIJI_All_T1
         val:
-          _target_: src.pl_data.dataset.COR14
+          _target_: src.pl_data.dataset.JAK
           train: False
-          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plat1/GSGT1-JAK-ZF-UC-NN5319AND5320-GEDI8-29-22/FIJI_All_T1
+          path: /content/drive/MyDrive/genentech_data/GSGT1-JAK-ZF-UC-NN5319AND5320-GEDI8-29-22/FIJI_All_T1
         test:
-          _target_: src.pl_data.dataset.COR14
+          _target_: src.pl_data.dataset.JAK
           train: False
-          path: /content/drive/MyDrive/genentech_data/JAK-GSGT2-Plat1/FIJI_All_T1
+          path: /content/drive/MyDrive/genentech_data/GSGT1-JAK-ZF-UC-NN5319AND5320-GEDI8-29-22/FIJI_All_T1
     num_workers:
       train: 4
       val: 4
