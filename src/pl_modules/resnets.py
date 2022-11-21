@@ -10,7 +10,7 @@ from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 # from pl_bolts.models.self_supervised.resnets import resnet18 as sclr_resnet18
 # from pl_bolts.models.self_supervised.resnets import resnet50 as scrl_resnet50
-from src.pl_modules.resnet_parts import resnet18 as normal_resnet18
+# from src.pl_modules.resnet_parts import resnet18 as normal_resnet18
 from src.pl_modules.simclr_resnet_parts import resnet18 as sclr_resnet18
 from src.pl_modules.simclr_resnet_parts import resnet50 as scrl_resnet50
 # from pl_bolts.models.self_supervised import SimCLR
