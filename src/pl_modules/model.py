@@ -49,7 +49,7 @@ class MyModel(pl.LightningModule):
             self.final_nl = getattr(F, final_nl)
         else:
             self.final_nl = lambda x, dim: x
-
+        import pdb;pdb.set_trace()
         if self.name == "resnet18":
             self.net = resnets.resnet18(pretrained=True, num_classes=num_classes)
         elif self.name == "simclr_resnet18":
