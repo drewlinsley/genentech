@@ -142,8 +142,8 @@ class JAK(Dataset):
         self.maxval = 33000
         self.minval = 0
         self.denom = self.maxval - self.minval
-        self.control = ["NN0005319"]
-        self.disease = ["NN0005320"]
+        self.control = "NN0005319"
+        self.disease = "NN0005320"
 
         # List all the files
         print("Globbing files for JAK, this may take a while...")
