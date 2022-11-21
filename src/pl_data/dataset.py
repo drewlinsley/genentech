@@ -168,13 +168,14 @@ class JAK(Dataset):
         img = (img - self.minval) / self.denom  # Normalize to [0, 1]
         img = img[None].repeat(3, axis=0)  # Stupid but let's replicate 1->3 channel
 
-        cell_line = fn.split(os.path.sep)[-2]
+        cell_line = fn.split(os.path.sep)[-3]
         if cell_line in self.control:
             label = 0
         elif cell_line in self.disease:
             label = 1
         else:
-            raise RuntimeError("Found label={} but expecting labels in [1, 2].".format(label))
+            print(cell_line)
+            raise RuntimeError("Found label={} but expecting labels in [0, 1].".format(label))
         return img, label
 
     def __repr__(self) -> str:
