@@ -22,6 +22,7 @@ def resnet18(pretrained=False, num_classes=None, num_samples=None, batch_size=No
     model = normal_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
     # model.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
     # model.maxpool = nn.Identity()
+    import pdb;pdb.set_trace()
     return model
 
 
