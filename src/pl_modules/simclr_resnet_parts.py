@@ -272,6 +272,7 @@ class ResNet(nn.Module):
 def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     model = ResNet(block, layers, **kwargs)
     if pretrained:
+        import pdb;pdb.set_trace()
         state_dict = load_state_dict_from_url(MODEL_URLS[arch], progress=progress)
         model.load_state_dict(state_dict, strict=False)
     return model
