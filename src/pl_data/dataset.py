@@ -174,8 +174,7 @@ class JAK(Dataset):
         elif cell_line in self.disease:
             label = 1
         else:
-            print(cell_line)
-            raise RuntimeError("Found label={} but expecting labels in [0, 1].".format(label))
+            raise RuntimeError("Found label={} but expecting labels in [0, 1].".format(cell_line))
         return img, label
 
     def __repr__(self) -> str:
