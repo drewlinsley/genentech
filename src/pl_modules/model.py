@@ -174,24 +174,26 @@ class MyModel(pl.LightningModule):
             )
 
             # Add gradient visualization
-            attributions_ig_nt = integrated_gradients.attribute(
-                output_element["image"].unsqueeze(0),
-                target=output_element["y_true"])
-            vz = viz.visualize_image_attr(
-                np.transpose(attributions_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0)),
-                np.transpose(output_element["image"].cpu().detach().numpy(), (1, 2, 0)),
-                method='blended_heat_map',
-                show_colorbar=True,
-                use_pyplot=False,
-                # sign='positive',
-                outlier_perc=0)
-            images_feat_viz.append(
-                wandb.Image(
-                    vz[0],
-                    caption=caption,
-                ))
-            plt.close(vz[0])
-
+            try:
+                attributions_ig_nt = integrated_gradients.attribute(
+                    output_element["image"].unsqueeze(0),
+                    target=output_element["y_true"])
+                vz = viz.visualize_image_attr(
+                    np.transpose(attributions_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0)),
+                    np.transpose(output_element["image"].cpu().detach().numpy(), (1, 2, 0)),
+                    method='blended_heat_map',
+                    show_colorbar=True,
+                    use_pyplot=False,
+                    # sign='positive',
+                    outlier_perc=0)
+                images_feat_viz.append(
+                    wandb.Image(
+                        vz[0],
+                        caption=caption,
+                    ))
+                plt.close(vz[0])
+            except:
+                print("Failed to process attribution")
         self.logger.experiment.log({"Validation Images": images}, step=self.global_step)
         self.logger.experiment.log(
             {"Validation Images Viz": images_feat_viz},
