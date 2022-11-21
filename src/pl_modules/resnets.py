@@ -10,6 +10,7 @@ from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 # from pl_bolts.models.self_supervised.resnets import resnet18 as sclr_resnet18
 # from pl_bolts.models.self_supervised.resnets import resnet50 as scrl_resnet50
+from src.pl_modules.resnet_parts import resnet18 as normal_resnet18
 from src.pl_modules.simclr_resnet_parts import resnet18 as sclr_resnet18
 from src.pl_modules.simclr_resnet_parts import resnet50 as scrl_resnet50
 # from pl_bolts.models.self_supervised import SimCLR
@@ -18,8 +19,7 @@ from src.pl_modules.simclr_resnet_parts import resnet50 as scrl_resnet50
 def resnet18(pretrained=False, num_classes=None, num_samples=None, batch_size=None):
     assert num_classes is not None, "You must pass the number of classes to your model."
     # model = torchvision.models.resnet18(pretrained=False, num_classes=num_classes)
-    import pdb;pdb.set_trace()
-    model = sclr_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
+    model = normal_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
     # model.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
     # model.maxpool = nn.Identity()
     return model
