@@ -147,8 +147,8 @@ class JAK(Dataset):
 
         # List all the files
         print("Globbing files for JAK, this may take a while...")
-        self.c1 = glob(os.path.join(self.path, "**", "Soma", self.control, "*.tif"))
-        self.c2 = glob(os.path.join(self.path, "**", "Soma", self.disease, "*.tif"))
+        self.c1 = glob(os.path.join(self.path, "**", self.control, "Soma", "*.tif"))
+        self.c2 = glob(os.path.join(self.path, "**", self.disease, "Soma", "*.tif"))
         min_files = min(len(self.c1), len(self.c2))
         print("Using {} files".format(min_files))
         self.files = self.c1[:min_files] + self.c2[:min_files]
