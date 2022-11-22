@@ -133,8 +133,12 @@ def run(cfg: DictConfig) -> None:
     if "wandb" in cfg.logging:
         hydra.utils.log.info(f"Instantiating <WandbLogger>")
         wandb_config = cfg.logging.wandb
+        print(cfg.name)
         wandb_logger = WandbLogger(
-            name=cfg.data.datamodule.dataset_name + "__" + cfg.model.name,
+            name="{}_{}_{}".format(
+                cfg.core.experiment,
+                cfg.data.datamodule.dataset_name,
+                cfg.model.name),
             project=wandb_config.project,
             entity=wandb_config.entity,
             tags=cfg.core.tags,

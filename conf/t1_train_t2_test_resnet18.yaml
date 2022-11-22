@@ -1,6 +1,7 @@
 # metadata specialised for each experiment
 core:
   version: 0.0.1
+  experiment: t1_train_t2_test_resnet18
   tags:
     - consulting
 
