@@ -11,7 +11,7 @@ core:
 data:
   datamodule:
     _target_: src.pl_data.datamodule.MyDataModule
-    val_proportion: 0.10
+    val_proportion: 0.
     dataset_name: JAK  # Label for experiment
     transform_recipe: COR14
     datasets:
