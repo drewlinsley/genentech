@@ -35,6 +35,7 @@ class MyModel(pl.LightningModule):
             self_supervised=False,
             num_samples=False,
             batch_size=False,
+            task="binary",
             *args,
             **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -66,7 +67,7 @@ class MyModel(pl.LightningModule):
         else:
             raise NotImplementedError("Could not find network {}.".format(self.net))
 
-        metric = torchmetrics.Accuracy()
+        metric = torchmetrics.Accuracy(task)
         self.train_accuracy = metric.clone().cuda()
         self.val_accuracy = metric.clone().cuda()
         self.test_accuracy = metric.clone().cuda()
