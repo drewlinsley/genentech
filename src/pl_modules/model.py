@@ -43,6 +43,8 @@ class MyModel(pl.LightningModule):
         self.save_hyperparameters(cfg)
         self.name = name
         self.self_supervised = self_supervised
+        self.validation_step_outputs = []
+        self.test_step_outputs = []
         # self.automatic_optimization = False
         self.num_classes = num_classes
         self.loss = getattr(losses, loss)  # Add this to the config
@@ -113,7 +115,7 @@ class MyModel(pl.LightningModule):
     def validation_step(self, batch: Any, batch_idx: int) -> Dict[str, torch.Tensor]:
         x, y = batch
         out = self.step(x, y)
-
+        self.validation_step_outputs.append(out)
         return out
     
     def validation_step_end(self, out):
@@ -134,6 +136,7 @@ class MyModel(pl.LightningModule):
     def test_step(self, batch: Any, batch_idx: int) -> Dict[str, torch.Tensor]:
         x, y = batch
         out = self.step(x, y)
+        self.test_step_outputs.append(out)
         return out
 
     def test_step_end(self, out):
@@ -151,7 +154,8 @@ class MyModel(pl.LightningModule):
             "val_loss": out["loss"].mean(),
         }
 
-    def on_validation_epoch_end(self, outputs: List[Any]) -> None:
+    def on_validation_epoch_end(self):
+        outputs = self.validation_step_outputs
         if hasattr(self.net, "encoder"):
             layer = self.net.encoder.layer4
         else:
@@ -199,8 +203,10 @@ class MyModel(pl.LightningModule):
         self.logger.experiment.log(
             {"Validation Images Viz": images_feat_viz},
             step=self.global_step)
+        self.validation_step_outputs.clear()
 
-    def test_epoch_end(self, outputs: List[Any]) -> None:
+    def on_test_epoch_end(self):
+        outputs = self.test_step_outputs
         batch_size = self.cfg.data.datamodule.batch_size.test
 
         images = []
@@ -240,6 +246,7 @@ class MyModel(pl.LightningModule):
             plt.close(vz[0])
         self.logger.experiment.log({"Test Images": images}, step=self.global_step)
         self.logger.experiment.log({"Test Images Feature Viz": images_feat_viz}, step=self.global_step)
+        self.test_step_outputs.clear()
 
     def configure_optimizers(
         self,
