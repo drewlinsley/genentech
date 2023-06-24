@@ -106,21 +106,9 @@ train:
   # training
   eval_only: False
   ckpt: False
-  pl_trainer:
-    fast_dev_run: False # Enable this for debug purposes
-    gpus: 1
-    precision: 32
-    max_steps: 20000000
-    # accumulate_grad_batches: 1
-    # num_sanity_val_steps: 2
-    gradient_clip_val: 10000000.0  # 10.
-
-  monitor_metric: 'val_loss'
-  monitor_metric_mode: 'min'
-
-  early_stopping:
-    patience: 42
-    verbose: False
+  precision: 32  # 16
+  max_steps: 20000000
+  gradient_clip_val: 10
 
   model_checkpoints:
     save_top_k: 2
