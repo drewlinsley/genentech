@@ -101,7 +101,6 @@ optim:
 train:
   # reproducibility
   deterministic: False
-  random_seed: 42
 
   # training
   eval_only: False
