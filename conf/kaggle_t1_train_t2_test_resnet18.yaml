@@ -103,12 +103,7 @@ train:
   deterministic: False
 
   # training
-  eval_only: False
-  ckpt: False
+  ckpt_path: None
   precision: 32  # 16
   max_steps: 20000000
   gradient_clip_val: 10
-
-  model_checkpoints:
-    save_top_k: 2
-    verbose: False
