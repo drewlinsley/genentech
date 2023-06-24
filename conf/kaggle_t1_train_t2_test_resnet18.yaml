@@ -103,7 +103,6 @@ train:
   deterministic: False
 
   # training
-  ckpt_path: None
   precision: 32  # 16
   max_steps: 20000000
   gradient_clip_val: 10
