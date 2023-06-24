@@ -147,6 +147,7 @@ class JAK(Dataset):
 
         # List all the files
         print("Globbing files for JAK, this may take a while...")
+        import pdb;pdb.set_trace()
         self.c1 = glob(os.path.join(self.path, "**", self.control, "Soma", "*.tif"))
         self.c2 = glob(os.path.join(self.path, "**", self.disease, "Soma", "*.tif"))
         min_files = min(len(self.c1), len(self.c2))
