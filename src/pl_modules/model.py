@@ -53,6 +53,7 @@ class MyModel(pl.LightningModule):
         else:
             self.final_nl = lambda x, dim: x
         if self.name == "resnet18":
+            import pdb;pdb.set_trace()
             self.net = resnets.resnet18(pretrained=True, num_classes=num_classes)
         elif self.name == "simclr_resnet18":
             self.net = resnets.simclr_resnet18(
