@@ -52,7 +52,7 @@ class MyModel(pl.LightningModule):
         #     self.final_nl = getattr(F, final_nl)
         # else:
         #     self.final_nl = lambda x, dim: x
-        self.final_nl = lambda x: torch.argmax(x, 1)
+        self.final_nl = lambda x: torch.argmax(x, 1).float()
         if self.name == "resnet18":
             self.net = resnets.resnet18(pretrained=True, num_classes=num_classes)
         elif self.name == "simclr_resnet18":
