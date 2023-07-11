@@ -24,7 +24,7 @@ def set_parameter_requires_grad(model, feature_extracting):
 
 def resnet18(pretrained=False, num_classes=None, num_samples=None, batch_size=None):
     assert num_classes is not None, "You must pass the number of classes to your model."
-    model = torchvision.models.resnet18(pretrained=pretrained, num_classes=num_classes)
+    model = torchvision.models.resnet18(pretrained=pretrained)
     # model = sclr_resnet18(pretrained=pretrained, progress=True, num_classes=num_classes)
     set_parameter_requires_grad(model, feature_extracting=pretrained)
     num_ftrs = model.fc.in_features
