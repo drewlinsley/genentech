@@ -48,10 +48,11 @@ class MyModel(pl.LightningModule):
         # self.automatic_optimization = False
         self.num_classes = num_classes
         self.loss = getattr(losses, loss)  # Add this to the config
-        if final_nl:
-            self.final_nl = getattr(F, final_nl)
-        else:
-            self.final_nl = lambda x, dim: x
+        # if final_nl:
+        #     self.final_nl = getattr(F, final_nl)
+        # else:
+        #     self.final_nl = lambda x, dim: x
+        self.final_nl = lambda x: torch.argmax(x, 1)
         if self.name == "resnet18":
             self.net = resnets.resnet18(pretrained=True, num_classes=num_classes)
         elif self.name == "simclr_resnet18":
