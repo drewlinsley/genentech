@@ -86,7 +86,7 @@ class MyModel(pl.LightningModule):
         else:
             logits = self(x)
             if logits.shape[-1] > 1:
-                loss = self.loss(self.final_nl(logits, dim=-1), y)
+                loss = self.loss(self.final_nl(logits), y)
             else:
                 logits = logits.ravel()
                 loss = self.loss(self.final_nl(logits), y)
@@ -102,7 +102,7 @@ class MyModel(pl.LightningModule):
         return out
 
     def training_step_end(self, out):
-        self.train_accuracy(self.final_nl(out["logits"], dim=-1), out["y"])
+        self.train_accuracy(self.final_nl(out["logits"]), out["y"])
         self.log_dict(
             {
                 "train_acc": self.train_accuracy,
@@ -126,7 +126,7 @@ class MyModel(pl.LightningModule):
         return out
 
     def test_step_end(self, out):
-        self.test_accuracy(self.final_nl(out["logits"], dim=-1), out["y"])
+        self.test_accuracy(self.final_nl(out["logits"]), out["y"])
         self.log_dict(
             {
                 "test_acc": self.test_accuracy,
