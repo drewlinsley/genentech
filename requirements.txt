@@ -1,7 +1,7 @@
 pytorch-lightning
 lightning-bolts
-torchmetrics>=0.3
-torchvision
+# torchmetrics>=0.3
+# torchvision
 hydra-core
 wandb
 dvc

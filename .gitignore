@@ -1,4 +1,10 @@
+*.npz
+*.pth
+wandb/
 experiments/*
+genentech_data/
+genentech_data_old/
+gradims/
 __pycache__
 *.pyc
 
