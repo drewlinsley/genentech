@@ -7,7 +7,7 @@ from torch.nn import functional as F
 
 class VanillaGrad(object):
 
-    def __init__(self, pretrained_model, cuda=False):
+    def __init__(self, pretrained_model, cuda=True):
         self.pretrained_model = pretrained_model
         # self.features = pretrained_model.features
         self.cuda = cuda

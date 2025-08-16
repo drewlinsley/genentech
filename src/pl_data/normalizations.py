@@ -17,3 +17,10 @@ def cifar10_normalization():
     normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
                                      std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
     return normalize
+
+
+def HD_normalization(maxval=2**16):
+    normalize = transforms.Normalize(mean=[x / maxval for x in [1086.6762200888888]],
+                                     std=[x / maxval for x in [2019.9389348809887]])
+    return normalize
+
